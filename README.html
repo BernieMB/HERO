@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manual de HERO_v2: un juego de rescate en HTML inspirado en H.E.R.O. de Commodore 64. Controles, mecánicas y guía de inicio.">
+  <title>H.E.R.O. · Manual de rescate</title>
+  <style>
+    :root { color-scheme: dark; --bg: #10101c; --panel: #1b1930; --ink: #eeedf7; --muted: #bbb8d3; --purple: #9c8fe8; --yellow: #eeee77; --green: #aaffaa; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.7 system-ui, sans-serif; }
+    a { color: var(--yellow); text-underline-offset: .2em; }
+    a:hover { color: white; }
+    a:focus-visible { outline: 3px solid var(--green); outline-offset: 5px; }
+    .skip { position: absolute; left: 1rem; top: -6rem; padding: .6rem; background: var(--bg); }
+    .skip:focus { top: 1rem; }
+    header, main, footer { max-width: 1040px; margin: auto; padding: 2rem clamp(1rem, 4vw, 3rem); }
+    header { padding-top: 4rem; border-bottom: 3px solid var(--purple); background: linear-gradient(145deg, #352879, var(--bg) 80%); }
+    .eyebrow, h1, h2, h3, .button, .badge { font-family: ui-monospace, Consolas, monospace; }
+    .eyebrow { color: var(--green); letter-spacing: .15em; font-size: .8rem; }
+    h1 { margin: .3rem 0; color: var(--yellow); font-size: clamp(3rem, 10vw, 6rem); line-height: 1.2; text-shadow: 4px 4px #352879; }
+    .subtitle { margin-top: 0; color: #aaffee; }
+    .intro { max-width: 700px; }
+    .badges { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+    .badge { border: 1px solid var(--purple); padding: .2rem .65rem; font-size: .8rem; }
+    .button { display: inline-block; padding: .7rem 1.2rem; margin: .5rem 0 1rem; background: var(--yellow); color: #10101c; font-weight: bold; text-decoration: none; box-shadow: 4px 4px #6c5eb5; }
+    .button:hover { color: #10101c; background: white; }
+    nav { display: flex; flex-wrap: wrap; gap: .5rem 1.3rem; padding: 1rem 0; font-size: .9rem; }
+    section { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+    h2 { font-size: 1.45rem; color: var(--yellow); border-bottom: 1px solid #48415e; padding-bottom: .5rem; }
+    h3 { font-size: 1.05rem; color: #aaffee; margin-top: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1rem; }
+    .card { background: var(--panel); padding: 1.3rem; border-left: 3px solid var(--purple); }
+    .card p { margin-bottom: 0; }
+    .note { padding: 1rem 1.2rem; background: var(--panel); border-left: 3px solid var(--green); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    caption { text-align: left; color: var(--muted); margin-bottom: .7rem; }
+    th, td { text-align: left; padding: .75rem; border-bottom: 1px solid #48415e; vertical-align: top; }
+    th { background: var(--panel); color: #aaffee; }
+    kbd, code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; background: #29253e; padding: .1rem .3rem; border-radius: 3px; }
+    kbd { border-bottom: 2px solid #81749f; white-space: nowrap; }
+    li { margin-bottom: .45rem; }
+    footer { color: var(--muted); border-top: 1px solid #48415e; font-size: .9rem; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      :root { --bg: white; --panel: #eee; --ink: black; --muted: #333; --purple: #555; --yellow: #222; --green: #333; }
+      body { font-size: 11pt; }
+      header { background: none; padding-top: 1rem; }
+      h1 { text-shadow: none; }
+      h3, th, .subtitle { color: black; }
+      nav, .button, .skip { display: none; }
+      kbd, code { background: #eee; }
+      .card, tr { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#manual">Saltar al manual</a>
+  <header>
+    <div class="eyebrow">HERO_v2 / MANUAL DE RESCATE</div>
+    <h1>H.E.R.O.</h1>
+    <p class="subtitle">Helicopter Emergency Rescue Operation</p>
+    <p class="intro">Desciende a las profundidades de una mina, abre paso entre sus peligros y rescata al minero atrapado antes de agotar tu energía. Un tributo jugable en el navegador al clásico de Commodore 64.</p>
+    <div class="badges"><span class="badge">HTML + CSS + JavaScript</span><span class="badge">320 × 200 píxeles</span><span class="badge">Sin dependencias</span><span class="badge">Juego sin conexión</span></div>
+    <a class="button" href="hero.html">▶ JUGAR A H.E.R.O.</a>
+    <nav aria-label="Secciones del manual">
+      <a href="#inicio">Inicio</a><a href="#controles">Controles</a><a href="#mision">La misión</a><a href="#puntos">Puntuación</a><a href="#tecnica">Detalles técnicos</a><a href="#origen">Inspiración</a>
+    </nav>
+  </header>
+  <main id="manual">
+    <section id="inicio">
+      <h2>01 / Preparar la expedición</h2>
+      <ol>
+        <li>Descarga el proyecto y abre <code>hero.html</code> en un navegador moderno con JavaScript habilitado.</li>
+        <li>En la pantalla de título, selecciona una partida con las teclas <kbd>1</kbd> a <kbd>5</kbd> o con <kbd>←</kbd> y <kbd>→</kbd>.</li>
+        <li>Pulsa <kbd>Espacio</kbd> o <kbd>Enter</kbd> para comenzar.</li>
+      </ol>
+      <p>Las cinco opciones empiezan en los niveles <strong>1, 5, 9, 13 y 17</strong>, respectivamente. Para aprender, empieza por la primera.</p>
+      <p class="note">No necesitas instalar paquetes, compilar ni iniciar un servidor. El juego incluye sus gráficos y sonidos en un único archivo. El audio se activa al interactuar con el teclado o los botones táctiles.</p>
+    </section>
+    <section id="controles">
+      <h2>02 / Controles</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Teclado durante la partida</caption>
+          <thead><tr><th scope="col">Acción</th><th scope="col">Teclas</th><th scope="col">Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Moverse</td><td><kbd>←</kbd> / <kbd>→</kbd> o <kbd>A</kbd> / <kbd>D</kbd></td><td>Caminar o desplazarse lateralmente en el aire.</td></tr>
+            <tr><td>Volar</td><td><kbd>↑</kbd> o <kbd>W</kbd></td><td>Mantener para activar la hélice y ascender. Soltar para descender por gravedad.</td></tr>
+            <tr><td>Disparar láser</td><td><kbd>Espacio</kbd>, <kbd>Z</kbd>, <kbd>J</kbd> o <kbd>Ctrl</kbd></td><td>Mantener para disparar hacia donde mira el personaje.</td></tr>
+            <tr><td>Colocar dinamita</td><td><kbd>↓</kbd> o <kbd>S</kbd></td><td>Pulsar estando en el suelo. Soltar y volver a pulsar para colocar otra carga.</td></tr>
+            <tr><td>Pausar / continuar</td><td><kbd>P</kbd> o <kbd>Esc</kbd></td><td>Alternar la pausa durante el juego.</td></tr>
+            <tr><td>Activar / silenciar sonido</td><td><kbd>M</kbd></td><td>Alternar el audio una vez iniciada la partida.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>En dispositivos táctiles aparecen botones para izquierda, derecha, vuelo, <strong>TNT</strong> y <strong>LASER</strong>. Toca uno para iniciar desde el título. La interfaz táctil no incluye botones dedicados de pausa o sonido.</p>
+      <p>Al perder el foco de la ventana, la partida se pausa automáticamente. En la pantalla de fin de partida, pulsa <kbd>Espacio</kbd> o <kbd>Enter</kbd> cuando aparezca la indicación para volver al título.</p>
+    </section>
+    <section id="mision">
+      <h2>03 / Sobrevivir en la mina</h2>
+      <div class="grid">
+        <article class="card"><h3>Rescate y exploración</h3><p>Recorre cámaras verticales y galerías conectadas, con desvíos laterales. Toca al minero al final del recorrido para rescatarlo y pasar al siguiente nivel tras el recuento de bonificaciones.</p></article>
+        <article class="card"><h3>Energía limitada</h3><p>La barra de energía funciona como un temporizador: empieza a bajar con tu primera acción y sigue consumiéndose aunque te detengas. Si se vacía, pierdes una vida.</p></article>
+        <article class="card"><h3>Láser y dinamita</h3><p>El láser elimina enemigos y destruye muros vulnerables con fuego sostenido. Cada nivel comienza con seis cargas de dinamita: colócalas en el suelo y aléjate antes de la explosión. Solo puede haber una carga o explosión activa a la vez.</p></article>
+        <article class="card"><h3>Peligros y oscuridad</h3><p>Evita arañas, murciélagos, polillas y tentáculos, además del agua, el magma y los muros calientes. Tocar una lámpara la rompe y oculta el terreno de esa pantalla; la dinamita y su explosión lo iluminan temporalmente.</p></article>
+      </div>
+      <h3>Vidas y progreso</h3>
+      <p>Empiezas con tres vidas de reserva además del intento actual. Al morir, reapareces en el punto de entrada de la pantalla actual con energía completa y una breve protección frente a enemigos. La dinamita gastada no se repone al morir; se recarga al comenzar un nuevo nivel.</p>
+      <p>Los niveles se generan de forma determinista a partir de su número: repetir un nivel conserva su diseño inicial. La longitud aumenta hasta un máximo de 14 pantallas por nivel y se incorporan nuevos peligros. La progresión continúa tras cada rescate, sin un nivel final definido en el código.</p>
+      <h3>Consejos de campo</h3>
+      <ul>
+        <li>Anticipa el vuelo: la hélice necesita un breve tiempo de arranque y el personaje tiene inercia.</li>
+        <li>Retrocede después de colocar TNT: tu propia explosión puede matarte.</li>
+        <li>Conserva las lámparas y observa el terreno antes de bajar a otra cámara.</li>
+        <li>Usa el láser para ahorrar dinamita, pero vigila el tiempo que consumes derribando muros.</li>
+      </ul>
+    </section>
+    <section id="puntos">
+      <h2>04 / Puntuación e indicadores</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Recompensas de esta versión</caption>
+          <thead><tr><th scope="col">Acción</th><th scope="col">Puntos</th></tr></thead>
+          <tbody>
+            <tr><td>Eliminar un enemigo</td><td>50</td></tr>
+            <tr><td>Destruir un conjunto conectado de muro vulnerable</td><td>75</td></tr>
+            <tr><td>Rescatar al minero</td><td>1.000</td></tr>
+            <tr><td>Dinamita sobrante al completar el nivel</td><td>50 por carga</td></tr>
+            <tr><td>Energía sobrante al completar el nivel</td><td>10 por cada tramo de hasta el 1 % de la barra restante</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Consigues una <strong>vida extra cada 20.000 puntos</strong>. El panel inferior muestra energía, nivel, vidas de reserva, dinamita y puntuación; los iconos de vidas se muestran hasta un máximo de seis, aunque puedes acumular más.</p>
+      <p>El récord se guarda en el navegador mediante <code>localStorage</code>, con la clave <code>hero_hi</code>, si el navegador permite ese almacenamiento. No se guarda la partida en curso.</p>
+    </section>
+    <section id="tecnica">
+      <h2>05 / Dentro del proyecto</h2>
+      <ul>
+        <li><strong>Renderizado:</strong> Canvas 2D a 320 × 200 píxeles, escalado con bordes nítidos y líneas de barrido decorativas.</li>
+        <li><strong>Arte:</strong> sprites definidos como texto, fuente bitmap de 5 × 7 y tiles de 16 × 16 píxeles. Paletas de roca variables con la profundidad.</li>
+        <li><strong>Audio:</strong> efectos sintetizados con Web Audio API, de inspiración SID, incluyendo hélice, disparos, explosiones y melodías breves.</li>
+        <li><strong>Simulación:</strong> actualización a paso fijo de 60 Hz y dibujo con <code>requestAnimationFrame</code>.</li>
+        <li><strong>Arquitectura:</strong> HTML, CSS y JavaScript nativos, sin bibliotecas, recursos externos ni proceso de compilación.</li>
+      </ul>
+      <div class="table-wrap">
+        <table>
+          <caption>Archivos del proyecto</caption>
+          <thead><tr><th scope="col">Archivo</th><th scope="col">Contenido</th></tr></thead>
+          <tbody>
+            <tr><td><a href="hero.html"><code>hero.html</code></a></td><td>Juego completo: interfaz, gráficos, sonido, niveles y lógica.</td></tr>
+            <tr><td><code>README.html</code></td><td>Este manual, listo para consultar sin conexión o imprimir.</td></tr>
+            <tr><td><code>README.md</code></td><td>Presentación breve y enlaces de entrada al proyecto.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="origen">
+      <h2>06 / Inspiración retro</h2>
+      <p><strong>H.E.R.O.</strong> es un clásico de Activision de 1984, creado originalmente por John Van Ryzin y conocido también por su versión para Commodore 64. Su combinación de vuelo, rescates, láser y dinamita sirve de inspiración a este proyecto.</p>
+      <p><strong>HERO_v2</strong> recrea ese espíritu con una implementación propia para navegador, niveles procedurales, controles táctiles y una presentación de estilo 8 bits. Es un tributo, no una emulación del hardware ni una reproducción exacta de los mapas del original.</p>
+    </section>
+  </main>
+  <footer>HERO_v2 · Manual de la implementación incluida en <code>hero.html</code> · Rescata al minero. Conserva energía. Regresa a por el siguiente.</footer>
+</body>
+</html>
